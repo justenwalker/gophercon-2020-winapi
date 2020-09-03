@@ -1,0 +1,75 @@
+package main
+
+import "syscall"
+
+const (
+	_NO_ERROR                  syscall.Errno = 0
+	_ERROR_INVALID_PARAMETER   syscall.Errno = 0x57
+	_ERROR_INSUFFICIENT_BUFFER syscall.Errno = 0x7A
+)
+
+const (
+	_AF_INET4 uint32 = 2
+	_AF_INET6 uint32 = 23
+)
+
+type _MIB_TCP_STATE uint32
+
+const (
+	_MIB_TCP_STATE_CLOSED _MIB_TCP_STATE = iota + 1
+	_MIB_TCP_STATE_LISTEN
+	_MIB_TCP_STATE_SYN_SENT
+	_MIB_TCP_STATE_SYN_RCVD
+	_MIB_TCP_STATE_ESTAB
+	_MIB_TCP_STATE_FIN_WAIT1
+	_MIB_TCP_STATE_FIN_WAIT2
+	_MIB_TCP_STATE_CLOSE_WAIT
+	_MIB_TCP_STATE_CLOSING
+	_MIB_TCP_STATE_LAST_ACK
+	_MIB_TCP_STATE_TIME_WAIT
+	_MIB_TCP_STATE_DELETE_TCB
+)
+
+type _TCP_TABLE_CLASS int
+
+const (
+	_TCP_TABLE_BASIC_LISTENER _TCP_TABLE_CLASS = iota
+	_TCP_TABLE_BASIC_CONNECTIONS
+	_TCP_TABLE_BASIC_ALL
+	_TCP_TABLE_OWNER_PID_LISTENER
+	_TCP_TABLE_OWNER_PID_CONNECTIONS
+	_TCP_TABLE_OWNER_PID_ALL
+	_TCP_TABLE_OWNER_MODULE_LISTENER
+	_TCP_TABLE_OWNER_MODULE_CONNECTIONS
+	_TCP_TABLE_OWNER_MODULE_ALL
+)
+
+/*
+typedef struct _MIB_TCPTABLE_OWNER_PID {
+DWORD                dwNumEntries;
+MIB_TCPROW_OWNER_PID table[ANY_SIZE];
+} MIB_TCPTABLE_OWNER_PID, *PMIB_TCPTABLE_OWNER_PID;
+*/
+type _MIB_TCPTABLE_OWNER_PID struct {
+	NumEntries uint32
+	Table      [1]_MIB_TCPROW_OWNER_PID
+}
+
+/*
+typedef struct _MIB_TCPROW_OWNER_PID {
+  DWORD dwState;
+  DWORD dwLocalAddr;
+  DWORD dwLocalPort;
+  DWORD dwRemoteAddr;
+  DWORD dwRemotePort;
+  DWORD dwOwningPid;
+} MIB_TCPROW_OWNER_PID, *PMIB_TCPROW_OWNER_PID;
+*/
+type _MIB_TCPROW_OWNER_PID struct {
+	State      uint32
+	LocalAddr  uint32
+	LocalPort  uint32
+	RemoteAddr uint32
+	RemotePort uint32
+	OwningPID  uint32
+}
