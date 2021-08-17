@@ -78,7 +78,7 @@ func toCredential(pcred *_CREDENTIALW) (credential Credential) {
 	if pcred.CredentialBlobSize > 0 {
 		n := int(pcred.CredentialBlobSize)
 		val := make([]byte, n)
-		copy(val, (*(*[1 << 30]byte)(unsafe.Pointer(pcred.CredentialBlob)))[0:n:n])
+		copy(val, unsafe.Slice(pcred.CredentialBlob, n))
 		credential.Credential = val
 	}
 	if pcred.AttributeCount > 0 {

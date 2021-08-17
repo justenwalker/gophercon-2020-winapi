@@ -11,7 +11,7 @@ import (
 //sys FileTimeToSystemTime(fileTime *_FILETIME, systemTime *_SYSTEMTIME) [failretval==0] (err error) = kernel32.FileTimeToSystemTime
 
 // UTF16PtrFromString converts a string to a UTF-16 C-String
-func UTF16PtrFromString(str string) (*uint16,error) {
+func UTF16PtrFromString(str string) (*uint16, error) {
 	return syscall.UTF16PtrFromString(str)
 }
 
@@ -29,7 +29,7 @@ func UTF16PtrToString(p *uint16) string {
 		end = unsafe.Pointer(uintptr(end) + wcharSize)
 		n++
 	}
-	// Convert *uint16 to []uint16 via *[1 << 30]uint16
-	wstr := (*[1 << 30]uint16)(unsafe.Pointer(p))[:n:n]
+	// Convert *uint16 to []uint16
+	wstr := unsafe.Slice(p, n)
 	return string(utf16.Decode(wstr))
 }

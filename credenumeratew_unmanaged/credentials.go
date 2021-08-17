@@ -96,7 +96,7 @@ func (c *Credential) Credential() []byte {
 		return nil
 	}
 	n := int(c.pcred.CredentialBlobSize)
-	return (*[1 << 30]byte)(unsafe.Pointer(c.pcred.CredentialBlob))[0:n:n]
+	return unsafe.Slice(c.pcred.CredentialBlob, n)
 }
 
 func (c *Credential) LastWritten() time.Time {

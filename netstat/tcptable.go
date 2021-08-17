@@ -42,7 +42,7 @@ func convertToTableRows(raw []byte) (result []TableRow) {
 		return
 	}
 	result = make([]TableRow, n)
-	rows := (*[1 << 30]_MIB_TCPROW_OWNER_PID)(unsafe.Pointer(&table.Table))[0:n:n]
+	rows := unsafe.Slice(&table.Table[0], table.NumEntries)
 	for i, row := range rows {
 		result[i] = TableRow{
 			Local:  convertToTCPv4Addr(row.LocalAddr, row.LocalPort),
