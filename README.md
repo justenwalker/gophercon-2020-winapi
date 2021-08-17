@@ -1,6 +1,6 @@
 # Safety Not Guaranteed - GopherCon 2020
 
-This repo contains some full-featured examples of calling Windows APIs from Go from my talk at GopherCon.
+This repo contains some full-featured examples of calling Windows APIs from Go from my [talk at GopherCon](https://www.youtube.com/watch?v=EsPcKkESYPA).
 Check out each folder for mor information.
 
 ## Building and Running the Examples
