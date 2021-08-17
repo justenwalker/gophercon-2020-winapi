@@ -19,7 +19,7 @@ i := uintptr(1) // subscript/offset to the element we want
 sz := unsafe.Sizeof(T{}) // sz = size of T in bytes
 
 // t := arr[i]
-t := *(*T)unsafe.Pointer(uintptr(unsafe.Pointer(arr)) + (i*sz))
+t := *(*T)(unsafe.Pointer(uintptr(unsafe.Pointer(arr)) + (i * sz)))
 // this is several steps all happening on one line:
 //  a) uintptr(unsafe.Pointer(arr)) --- convert to uintptr so we can do arithmetic
 //  b) (a + i*sz) - advance the pointer the correct number of bytes to get to index 'i'
@@ -35,7 +35,7 @@ i := uintptr(1) // subscript/offset to the element we want
 sz := unsafe.Sizeof(T{}) // sz = size of T in bytes
 
 // t := arr[i]
-t := *(*T)unsafe.Add(unsafe.Pointer(arr),i * sz)
+t := *(*T)(unsafe.Add(unsafe.Pointer(arr),i * sz))
 ```
 
 Example:
@@ -52,7 +52,7 @@ func strlen(p *uint8) (n int) {
 		// Go 1.16 and earlier
 		p = (*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(p)) + 1))
 		// Go 1.17 and later
-		// p = (*uint8)unsafe.Add(unsafe.Pointer(p),1)
+		// p = (*uint8)(unsafe.Add(unsafe.Pointer(p), 1))
 		n++
 	}
     return
