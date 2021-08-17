@@ -5,11 +5,7 @@ Check out each folder for mor information.
 
 ## Building and Running the Examples
 
-1. Run `go get -u golang.org/x/sys/windows` to make sure you have it in your `GOPATH`.
-2. Run `go build` in the example folders to build the executable.
-3. Run the `.exe` to test the program.
-
-*Note*: I've only tested this on Go 1.15. I see no reason why this wouldn't work on 1.14 though.
+Run `.\build.ps1`, the commands will be built into the `.\bin` folder
 
 ## Unsafe Operations
 
