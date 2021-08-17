@@ -6,6 +6,7 @@ param (
         "all",
         "credenumeratew_managed",
         "credenumeratew_unmanaged",
+        "logon",
         "netstat",
         "networkparams",
         "unsafe_cast")]
@@ -27,6 +28,7 @@ function Build-Command {
 if ($Command -eq "all") {
     Build-Command -Command "credenumeratew_managed"
     Build-Command -Command "credenumeratew_unmanaged"
+    Build-Command -Command "logon"
     Build-Command -Command "netstat"
     Build-Command -Command "networkparams"
     Build-Command -Command "unsafe_cast"
