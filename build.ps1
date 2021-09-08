@@ -9,7 +9,8 @@ param (
         "logon",
         "netstat",
         "networkparams",
-        "unsafe_cast")]
+        "unsafe_cast",
+        "volumes")]
     [string]
     $Command="all"
 )
@@ -32,6 +33,7 @@ if ($Command -eq "all") {
     Build-Command -Command "netstat"
     Build-Command -Command "networkparams"
     Build-Command -Command "unsafe_cast"
+    Build-Command -Command "volumes"
 } else {
     Build-Command -Command $Command
 }
