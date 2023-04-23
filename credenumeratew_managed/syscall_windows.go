@@ -26,7 +26,8 @@ func UTF16PtrToString(p *uint16) string {
 	end := unsafe.Pointer(p)
 	var n int
 	for *(*uint16)(end) != 0 { // Advance to the NULL terminator
-		end = unsafe.Pointer(uintptr(end) + wcharSize)
+		// end = unsafe.Pointer(uintptr(end) + wcharSize)
+		end = unsafe.Add(end, wcharSize)
 		n++
 	}
 	// Convert *uint16 to []uint16

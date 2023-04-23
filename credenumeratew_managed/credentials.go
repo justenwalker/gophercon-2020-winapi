@@ -46,7 +46,8 @@ func CredEnumerate(filter string) ([]Credential, error) {
 	var sz = unsafe.Sizeof(&_CREDENTIALW{})
 	creds = make([]Credential, 0, int(count))
 	for i := uint32(0); i < count; i++ {
-		pcred := *(**_CREDENTIALW)(unsafe.Pointer(uintptr(unsafe.Pointer(items)) + uintptr(i)*sz))
+		// pcred := *(**_CREDENTIALW)(unsafe.Pointer(uintptr(unsafe.Pointer(items)) + uintptr(i)*sz))
+		pcred := *(**_CREDENTIALW)(unsafe.Add(unsafe.Pointer(items), uintptr(i)*sz))
 		// Copy all data to Go structs in Managed Memory
 		creds = append(creds, toCredential(pcred))
 	}
@@ -85,13 +86,15 @@ func toCredential(pcred *_CREDENTIALW) (credential Credential) {
 		credential.Attributes = make([]CredentialAttribute, 0, int(pcred.AttributeCount))
 		var attrsz uintptr = unsafe.Sizeof(_CREDENTIAL_ATTRIBUTEW{})
 		for i := uint32(0); i < pcred.AttributeCount; i++ {
-			pattr := (*_CREDENTIAL_ATTRIBUTEW)(unsafe.Pointer(uintptr(unsafe.Pointer(pcred.Attributes)) + uintptr(i)*attrsz))
+			// pattr := (*_CREDENTIAL_ATTRIBUTEW)(unsafe.Pointer(uintptr(unsafe.Pointer(pcred.Attributes)) + uintptr(i)*attrsz))
+			pattr := (*_CREDENTIAL_ATTRIBUTEW)(unsafe.Add(unsafe.Pointer(pcred.Attributes), uintptr(i)*attrsz))
 			key := UTF16PtrToString(pattr.Keyword)
 			n := int(pattr.ValueSize)
 			var val []byte
 			if n > 0 {
 				val = make([]byte, n)
-				copy(val, (*(*[256]byte)(unsafe.Pointer(pattr.Value)))[:n:n])
+				// copy(val, (*(*[256]byte)(unsafe.Pointer(pattr.Value)))[:n:n])
+				copy(val, unsafe.Slice(pattr.Value, n))
 			}
 			credential.Attributes = append(credential.Attributes, CredentialAttribute{
 				Keyword: key,

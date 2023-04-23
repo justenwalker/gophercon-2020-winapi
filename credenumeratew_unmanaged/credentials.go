@@ -37,7 +37,8 @@ func (c *Credentials) ForEach(fn func(cred Credential) error) error {
 	}
 	var sz = unsafe.Sizeof(&_CREDENTIALW{})
 	for i := uint32(0); i < c.count; i++ {
-		pcred := *(**_CREDENTIALW)(unsafe.Pointer(uintptr(unsafe.Pointer(c.items)) + uintptr(i)*sz))
+		// pcred := *(**_CREDENTIALW)(unsafe.Pointer(uintptr(unsafe.Pointer(c.items)) + uintptr(i)*sz))
+		pcred := *(**_CREDENTIALW)(unsafe.Add(unsafe.Pointer(c.items), uintptr(i)*sz))
 		if err := fn(Credential{
 			free:  &c.free,
 			pcred: pcred,
@@ -144,13 +145,15 @@ func (c *Credential) Attributes() []CredentialAttribute {
 	attrs := make([]CredentialAttribute, 0, int(c.pcred.AttributeCount))
 	var sz = unsafe.Sizeof(_CREDENTIAL_ATTRIBUTEW{})
 	for i := uint32(0); i < c.pcred.AttributeCount; i++ {
-		pattr := (*_CREDENTIAL_ATTRIBUTEW)(unsafe.Pointer(uintptr(unsafe.Pointer(c.pcred.Attributes)) + uintptr(i)*sz))
+		// pattr := (*_CREDENTIAL_ATTRIBUTEW)(unsafe.Pointer(uintptr(unsafe.Pointer(c.pcred.Attributes)) + uintptr(i)*sz))
+		pattr := (*_CREDENTIAL_ATTRIBUTEW)(unsafe.Add(unsafe.Pointer(c.pcred.Attributes), uintptr(i)*sz))
 		key := UTF16PtrToString(pattr.Keyword)
 		n := int(pattr.ValueSize)
 		var val []byte
 		if n > 0 {
 			val = make([]byte, n)
-			copy(val, (*(*[256]byte)(unsafe.Pointer(pattr.Value)))[:n:n])
+			// copy(val, (*(*[256]byte)(unsafe.Pointer(pattr.Value)))[:n:n])
+			copy(val, unsafe.Slice(pattr.Value, n))
 		}
 		attrs = append(attrs, CredentialAttribute{
 			Keyword: key,
