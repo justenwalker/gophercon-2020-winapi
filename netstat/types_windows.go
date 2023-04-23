@@ -56,14 +56,14 @@ type _MIB_TCPTABLE_OWNER_PID struct {
 }
 
 /*
-typedef struct _MIB_TCPROW_OWNER_PID {
-  DWORD dwState;
-  DWORD dwLocalAddr;
-  DWORD dwLocalPort;
-  DWORD dwRemoteAddr;
-  DWORD dwRemotePort;
-  DWORD dwOwningPid;
-} MIB_TCPROW_OWNER_PID, *PMIB_TCPROW_OWNER_PID;
+	typedef struct _MIB_TCPROW_OWNER_PID {
+	  DWORD dwState;
+	  DWORD dwLocalAddr;
+	  DWORD dwLocalPort;
+	  DWORD dwRemoteAddr;
+	  DWORD dwRemotePort;
+	  DWORD dwOwningPid;
+	} MIB_TCPROW_OWNER_PID, *PMIB_TCPROW_OWNER_PID;
 */
 type _MIB_TCPROW_OWNER_PID struct {
 	State      uint32

@@ -19,6 +19,7 @@ const (
 
 var (
 	errERROR_IO_PENDING error = syscall.Errno(errnoERROR_IO_PENDING)
+	errERROR_EINVAL     error = syscall.EINVAL
 )
 
 // errnoErr returns common boxed Errno values, to prevent
@@ -26,7 +27,7 @@ var (
 func errnoErr(e syscall.Errno) error {
 	switch e {
 	case 0:
-		return nil
+		return errERROR_EINVAL
 	case errnoERROR_IO_PENDING:
 		return errERROR_IO_PENDING
 	}
@@ -46,8 +47,6 @@ func _GetExtendedTcpTable(tcpTable *byte, tableSize *uint32, order bool, ulAf ui
 	var _p0 uint32
 	if order {
 		_p0 = 1
-	} else {
-		_p0 = 0
 	}
 	r0, _, _ := syscall.Syscall6(procGetExtendedTcpTable.Addr(), 6, uintptr(unsafe.Pointer(tcpTable)), uintptr(unsafe.Pointer(tableSize)), uintptr(_p0), uintptr(ulAf), uintptr(tableClass), uintptr(reserved))
 	ret = syscall.Errno(r0)

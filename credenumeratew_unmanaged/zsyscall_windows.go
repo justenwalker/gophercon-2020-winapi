@@ -19,6 +19,7 @@ const (
 
 var (
 	errERROR_IO_PENDING error = syscall.Errno(errnoERROR_IO_PENDING)
+	errERROR_EINVAL     error = syscall.EINVAL
 )
 
 // errnoErr returns common boxed Errno values, to prevent
@@ -26,7 +27,7 @@ var (
 func errnoErr(e syscall.Errno) error {
 	switch e {
 	case 0:
-		return nil
+		return errERROR_EINVAL
 	case errnoERROR_IO_PENDING:
 		return errERROR_IO_PENDING
 	}
@@ -48,11 +49,7 @@ var (
 func CredEnumerateW(filter *uint16, flags uint32, count *uint32, credentials ***_CREDENTIALW) (err error) {
 	r1, _, e1 := syscall.Syscall6(procCredEnumerateW.Addr(), 4, uintptr(unsafe.Pointer(filter)), uintptr(flags), uintptr(unsafe.Pointer(count)), uintptr(unsafe.Pointer(credentials)), 0, 0)
 	if r1 == 0 {
-		if e1 != 0 {
-			err = errnoErr(e1)
-		} else {
-			err = syscall.EINVAL
-		}
+		err = errnoErr(e1)
 	}
 	return
 }
@@ -65,11 +62,7 @@ func CredFree(buffer unsafe.Pointer) {
 func FileTimeToSystemTime(fileTime *_FILETIME, systemTime *_SYSTEMTIME) (err error) {
 	r1, _, e1 := syscall.Syscall(procFileTimeToSystemTime.Addr(), 2, uintptr(unsafe.Pointer(fileTime)), uintptr(unsafe.Pointer(systemTime)), 0)
 	if r1 == 0 {
-		if e1 != 0 {
-			err = errnoErr(e1)
-		} else {
-			err = syscall.EINVAL
-		}
+		err = errnoErr(e1)
 	}
 	return
 }

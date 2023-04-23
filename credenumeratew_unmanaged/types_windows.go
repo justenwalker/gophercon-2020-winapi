@@ -7,10 +7,10 @@ import (
 const _CRED_ENUMERATE_ALL_CREDENTIALS uint32 = 0x1
 
 /*
-typedef struct _FILETIME {
-	DWORD dwLowDateTime;
-	DWORD dwHighDateTime;
-} FILETIME, *PFILETIME, *LPFILETIME;
+	typedef struct _FILETIME {
+		DWORD dwLowDateTime;
+		DWORD dwHighDateTime;
+	} FILETIME, *PFILETIME, *LPFILETIME;
 */
 type _FILETIME struct {
 	LowDateTime  uint32
@@ -26,16 +26,16 @@ func (t *_FILETIME) ToTime() time.Time {
 }
 
 /*
-typedef struct _SYSTEMTIME {
-  WORD wYear;
-  WORD wMonth;
-  WORD wDayOfWeek;
-  WORD wDay;
-  WORD wHour;
-  WORD wMinute;
-  WORD wSecond;
-  WORD wMilliseconds;
-} SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
+	typedef struct _SYSTEMTIME {
+	  WORD wYear;
+	  WORD wMonth;
+	  WORD wDayOfWeek;
+	  WORD wDay;
+	  WORD wHour;
+	  WORD wMinute;
+	  WORD wSecond;
+	  WORD wMilliseconds;
+	} SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
 */
 type _SYSTEMTIME struct {
 	Year         uint16
@@ -60,26 +60,35 @@ func (s *_SYSTEMTIME) ToTime() time.Time {
 }
 
 /*
-typedef struct _CREDENTIALW {
-  DWORD                  Flags;
-  DWORD                  Type;
-  LPWSTR                 TargetName;
-  LPWSTR                 Comment;
-  FILETIME               LastWritten;
-  DWORD                  CredentialBlobSize;
-  LPBYTE                 CredentialBlob;
-  DWORD                  Persist;
-  DWORD                  AttributeCount;
-  PCREDENTIAL_ATTRIBUTEW Attributes;
+	typedef struct _CREDENTIALW {
+	  DWORD                  Flags;
+	  DWORD                  Type;
+	  LPWSTR                 TargetName;
+	  LPWSTR                 Comment;
+	  FILETIME               LastWritten;
+	  DWORD                  CredentialBlobSize;
+	  LPBYTE                 CredentialBlob;
+	  DWORD                  Persist;
+	  DWORD                  AttributeCount;
+	  PCREDENTIAL_ATTRIBUTEW Attributes;
+
 #if ...
-  wchar_t                *TargetAlias;
+
+	wchar_t                *TargetAlias;
+
 #else
-  LPWSTR                 TargetAlias;
+
+	LPWSTR                 TargetAlias;
+
 #endif
 #if ...
-  wchar_t                *UserName;
+
+	wchar_t                *UserName;
+
 #else
-  LPWSTR                 UserName;
+
+	LPWSTR                 UserName;
+
 #endif
 } CREDENTIALW, *PCREDENTIALW;
 */
@@ -108,12 +117,12 @@ const (
 )
 
 /*
-typedef struct _CREDENTIAL_ATTRIBUTEW {
-  LPWSTR  Keyword;
-  DWORD   Flags;
-  DWORD   ValueSize;
-  LPBYTE  Value;
-} CREDENTIAL_ATTRIBUTEW, *PCREDENTIAL_ATTRIBUTEW;
+	typedef struct _CREDENTIAL_ATTRIBUTEW {
+	  LPWSTR  Keyword;
+	  DWORD   Flags;
+	  DWORD   ValueSize;
+	  LPBYTE  Value;
+	} CREDENTIAL_ATTRIBUTEW, *PCREDENTIAL_ATTRIBUTEW;
 */
 type _CREDENTIAL_ATTRIBUTEW struct {
 	Keyword   *uint16

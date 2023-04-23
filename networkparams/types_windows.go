@@ -21,17 +21,17 @@ const (
 )
 
 /*
-typedef struct {
-  char            HostName[MAX_HOSTNAME_LEN + 4];
-  char            DomainName[MAX_DOMAIN_NAME_LEN + 4];
-  PIP_ADDR_STRING CurrentDnsServer;
-  IP_ADDR_STRING  DnsServerList;
-  UINT            NodeType;
-  char            ScopeId[MAX_SCOPE_ID_LEN + 4];
-  UINT            EnableRouting;
-  UINT            EnableProxy;
-  UINT            EnableDns;
-} FIXED_INFO_W2KSP1, *PFIXED_INFO_W2KSP1;
+	typedef struct {
+	  char            HostName[MAX_HOSTNAME_LEN + 4];
+	  char            DomainName[MAX_DOMAIN_NAME_LEN + 4];
+	  PIP_ADDR_STRING CurrentDnsServer;
+	  IP_ADDR_STRING  DnsServerList;
+	  UINT            NodeType;
+	  char            ScopeId[MAX_SCOPE_ID_LEN + 4];
+	  UINT            EnableRouting;
+	  UINT            EnableProxy;
+	  UINT            EnableDns;
+	} FIXED_INFO_W2KSP1, *PFIXED_INFO_W2KSP1;
 */
 type _FIXED_INFO struct {
 	HostName         [_MAX_HOSTNAME_LEN + 4]byte
@@ -46,12 +46,12 @@ type _FIXED_INFO struct {
 }
 
 /*
-typedef struct _IP_ADDR_STRING {
-  struct _IP_ADDR_STRING *Next;
-  IP_ADDRESS_STRING      IpAddress;
-  IP_MASK_STRING         IpMask;
-  DWORD                  Context;
-} IP_ADDR_STRING, *PIP_ADDR_STRING;
+	typedef struct _IP_ADDR_STRING {
+	  struct _IP_ADDR_STRING *Next;
+	  IP_ADDRESS_STRING      IpAddress;
+	  IP_MASK_STRING         IpMask;
+	  DWORD                  Context;
+	} IP_ADDR_STRING, *PIP_ADDR_STRING;
 */
 type _IP_ADDR_STRING struct {
 	Next      *_IP_ADDR_STRING
